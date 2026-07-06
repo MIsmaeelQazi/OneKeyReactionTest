@@ -83,6 +83,9 @@
                     }, Delay);
                 }
 
+ 
+
+
                 else if(State ==="waiting"){
 
                     clearTimeout(Timer);
@@ -113,3 +116,7 @@
             </script>
         </body>
     </html>
+
+
+
+    

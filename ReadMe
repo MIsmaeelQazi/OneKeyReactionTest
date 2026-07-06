@@ -1,143 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reaction Test</title>
+A lightweight, browser-based reaction time test built with vanilla web technologies. Test your reflexes, track your recent scores, and try to beat your own average!
+🎮 How to Play
 
-<style>
+    Open the game in any modern web browser.
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+    Press the W key to begin.
 
-body{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:Arial, sans-serif;
-    background:#90EE90; /* light green */
-    transition:none; /* IMPORTANT: no delay */
-}
+    The screen will turn red, indicating that you should wait.
 
-.container{
-    text-align:center;
-    background:rgba(0,0,0,0.25);
-    padding:50px;
-    border-radius:20px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.3);
-}
+    As soon as the screen turns green and says "Press W NOW!", hit the W key as fast as you can.
 
-h1{
-    color:white;
-    margin-bottom:30px;
-}
+    If you press it too early, you'll get a "Too Soon!" warning and will need to restart the round.
 
-button{
-    font-size:28px;
-    padding:25px 50px;
-    border:none;
-    border-radius:15px;
-    background:white;
-    font-weight:bold;
-    min-width:420px;
-}
+    Complete 3 rounds to get your average reaction time.
 
-.info{
-    margin-top:20px;
-    color:white;
-}
+✨ Features
 
-</style>
-</head>
+    Simple Controls: Uses a single key press (W) for all interactions.
 
-<body>
+    Visual Cues: High-contrast background color changes (Red to Green) to signal the player.
 
-<div class="container">
-    <h1>Reaction Test</h1>
-    <button id="btn">Press W to Start</button>
-    <div class="info">Complete 3 rounds</div>
-</div>
+    Anti-Cheat: Detects early key presses and resets the current round.
 
-<script>
+    Score Tracking: Calculates the average reaction time over 3 rounds
 
-const Btn = document.getElementById("btn");
+🛠️ Technologies Used
 
-let State = "ready";
-let StartTime;
-let Timer;
-let Times = [];
+    HTML5: Page structure and layout.
 
-document.addEventListener("keydown", function(E){
+    CSS3: Styling, transparency effects, and responsive layout.
 
-    if(E.key.toLowerCase() !== "w") return;
+    JavaScript (Vanilla): Game logic, state management, timing functions (setTimeout, Date.now()), and DOM manipulation.
 
-    // START ROUND
-    if(State === "ready"){
+🚀 Getting Started
 
-        document.body.style.background = "#C62828"; // red
-        Btn.textContent = "WAIT...";
+    Clone or download this repository.
 
-        State = "waiting";
+    Double-click the OneKeyReaction.html file to open it in your default web browser.
 
-        let Delay = Math.random() * 3000 + 2000;
-
-        Timer = setTimeout(() => {
-
-            document.body.style.background = "#00FF00"; // bright green
-            Btn.textContent = "PRESS W NOW!";
-
-            StartTime = Date.now();
-            State = "go";
-
-        }, Delay);
-    }
-
-    // TOO SOON
-    else if(State === "waiting"){
-
-        clearTimeout(Timer);
-
-        document.body.style.background = "#90EE90";
-        Btn.textContent = "Too Soon! Press W to Restart";
-
-        State = "ready";
-    }
-
-    // REACTION
-    else if(State === "go"){
-
-        let Reaction = Date.now() - StartTime;
-        Times.push(Reaction);
-
-        if(Times.length < 3){
-
-            document.body.style.background = "#90EE90";
-            Btn.textContent = "Round " + (Times.length + 1) + " - Press W";
-
-            State = "ready";
-
-        } else {
-
-            let Sum = 0;
-            for(let T of Times) Sum += T;
-
-            let Avg = Math.round(Sum / Times.length);
-
-            document.body.style.background = "#90EE90";
-            Btn.textContent = "Average: " + Avg + " ms | Press W to restart";
-
-            Times = [];
-            State = "ready";
-        }
-    }
-
-});
-
-</script>
-
-</body>
-</html>
+    Start pressing W!

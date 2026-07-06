@@ -2,15 +2,64 @@
     <html>
         <head>
             <title>OneKeyReaction</title>
+        <style>
+            *{
+                margin:0;
+                padding:0;
+                box-sizing:border-box;
+
+            }
+
+            body{
+                height:100vh;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                font-family:Arial,sans-serif;
+                background:#90EE90;
+
+            }
+
+            .container{
+                text-align:center;
+                background-color: rgba(0, 0, 0, 0.25);
+                padding:50px;
+                border-radius:20px;
+                box-shadow:0 15px 40px rgba(0, 0, 0, 0.5);
+            }
+
+            h1{
+                color:white;
+                margin-bottom:30px;
+            }
+
+            p, h3 {
+                color:white;
+                margin-bottom: 15px; 
+            }
+            button{
+                font-size:28px;
+                padding:25px 50px;
+                border:none;
+                border-radius:15px;
+                background:white;
+                font-weight:bold;
+                min-width: 420px;
+            }
+            .info{
+                margin-top: 20px;
+                color:white;
+            }
+        </style>
         </head>
-        <body>
+        <body><div class="container">
             <h1>Reaction Time</h1>
 
-            <p>Time for you to find you reaction time</p>
+            <p>Time for you to find your reaction time</p>
             <h3>Press W to start</h3>
             <button id="Button1">Start</button>
             <script>
-                const btn = document.getElementsById("Button1")
+                const Btn = document.getElementById("Button1")
 
                 let State = "ready";
                 let StartTime;
@@ -20,15 +69,15 @@
                 document.addEventListener("keydown",function(e){
                     if(e.key.toLowerCase() !== "w") return;
 
-                    if(state === "ready"){
-                        documemt.body.style.background = "red";
-                        btn.textContent = "WAIT.....";
+                    if(State === "ready"){
+                        document.body.style.background = "red";
+                        Btn.textContent = "WAIT.....";
                         State = "waiting";
 
-                        let Delay = Math.Random()*3000 +2000;
+                        let Delay = Math.random()*3000 +2000;
                         Timer = setTimeout(() => {
-                        documemt.body.style.background = "Green";
-                        btn.textContent = "Press W NOW!";    
+                        document.body.style.background = "Green";
+                        Btn.textContent = "Press W NOW!";    
                         StartTime = Date.now();
                         State = "go";
                     }, Delay);
@@ -46,7 +95,7 @@
                     let Reaction=Date.now() - StartTime;
                     Times.push(Reaction);
                     if(Times.length < 3){
-                        document.body.style.background = "Light Green";
+                        document.body.style.background = "#90EE90" ;
                         Btn.textContent = "Round" + (Times.length + 1) + "-Press W";
                         State = "ready";
                     }
@@ -54,8 +103,8 @@
                         let Sum = 0;
                         for(let T of Times) Sum+=T;
                         let Avg = Math.round(Sum/Times.length);
-                        document.body.style.background = "Light Green"
-                        Btn.textContent = "Average:" + Avg + "ms | Press W to restart";
+                        document.body.style.background = "#90EE90"
+                        Btn.textContent = "Your Score:" + Avg + "ms | Press W to restart";
                         Times = [];
                         State = "ready"; 
                     }

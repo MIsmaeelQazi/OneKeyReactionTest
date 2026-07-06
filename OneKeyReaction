@@ -1,4 +1,66 @@
 <DOCTYPE HTML>
     <html>
-        
+        <head>
+            <title>OneKeyReaction</title>
+        </head>
+        <body>
+            <h1>Reaction Time</h1>
+
+            <p>Time for you to find you reaction time</p>
+            <h3>Press W to start</h3>
+            <button id="Button1">Start</button>
+            <script>
+                const btn = document.getElementsById("Button1")
+
+                let State = "ready";
+                let StartTime;
+                let Timer;
+                let Times = [];
+
+                document.addEventListener("keydown",function(e){
+                    if(e.key.toLowerCase() !== "w") return;
+
+                    if(state === "ready"){
+                        documemt.body.style.background = "red";
+                        btn.textContent = "WAIT.....";
+                        State = "waiting";
+
+                        let Delay = Math.Random()*3000 +2000;
+                        Timer = setTimeout(() => {
+                        documemt.body.style.background = "Green";
+                        btn.textContent = "Press W NOW!";    
+                        StartTime = Date.now();
+                        State = "go";
+                    }, Delay);
+                }
+
+                else if(State ==="waiting"){
+
+                    clearTimeout(Timer);
+                    document.body.style.background = "Light Green";
+                    Btn.textContent = "Too Soon! Press W to start";
+                    State = "ready";
+
+                }
+                else if(State ==="go"){
+                    let Reaction=Date.now() - StartTime;
+                    Times.push(Reaction);
+                    if(Times.length < 3){
+                        document.body.style.background = "Light Green";
+                        Btn.textContent = "Round" + (Times.length + 1) + "-Press W";
+                        State = "ready";
+                    }
+                    else{
+                        let Sum = 0;
+                        for(let T of Times) Sum+=T;
+                        let Avg = Math.round(Sum/Times.length);
+                        document.body.style.background = "Light Green"
+                        Btn.textContent = "Average:" + Avg + "ms | Press W to restart";
+                        Times = [];
+                        State = "ready"; 
+                    }
+                }
+            });
+            </script>
+        </body>
     </html>
